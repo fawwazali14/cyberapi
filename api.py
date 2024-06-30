@@ -115,4 +115,4 @@ def data_social():
         return jsonify({"Comments": comments, "Description": cleaned_string, "Com_count": no})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+    app.run(debug=True, host='0.0.0.0', port=8000)
