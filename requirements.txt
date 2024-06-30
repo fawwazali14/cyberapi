@@ -1,0 +1,7 @@
+Flask
+Flask-Cors
+tweepy
+pandas
+scikit-learn
+google-api-python-client
+nltk
