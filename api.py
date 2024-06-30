@@ -59,60 +59,69 @@ def ml():
 
 @app.route('/dataa', methods=['POST'])
 def data_social():
-    data = request.data.decode()
-    json_data = json.loads(data)
-    platform = json_data['platform']
-    id = json_data['id']
+    try:
+        data = request.data.decode()
+        json_data = json.loads(data)
+        platform = json_data['platform']
+        id = json_data['id']
 
-    if platform == "Twitter":
-        consumer_key = "KAi8jFN93D96CAUwpwtJsDl5W"
-        consumer_secret = "FH45qTtGgj8bvL9a4JlHZtKvZNh0FXqSd4yT7WjqjelQbKcDzG"
-        access_token = "1484587292677181441-WtLbTzL5lCyklZlcVRK27kPFXYeCyZ"
-        access_token_secret = "iI3almvnTMqvi8LyoVIZHqKEk6MTeXBq1kVWufUmehArx"
+        if platform == "Twitter":
+            consumer_key = "your_consumer_key"
+            consumer_secret = "your_consumer_secret"
+            access_token = "your_access_token"
+            access_token_secret = "your_access_token_secret"
 
-        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-        auth.set_access_token(access_token, access_token_secret)
-        api = tweepy.API(auth)
+            auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+            auth.set_access_token(access_token, access_token_secret)
+            api = tweepy.API(auth)
 
-        status = api.get_status(id, tweet_mode='extended')
-        full_text = status.full_text
-        return jsonify({"text": full_text})
+            status = api.get_status(id, tweet_mode='extended')
+            full_text = status.full_text
+            return jsonify({"text": full_text})
 
-    elif platform == "Youtube":
-        DEVELOPER_KEY = 'AIzaSyAxo0H1RshuKNpnA8Hpex0DPkII9O6z9sY'
-        YOUTUBE_API_SERVICE_NAME = 'youtube'
-        YOUTUBE_API_VERSION = 'v3'
-        video_id = id
-        youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)
-        comments = []
-        nextPageToken = ''
-        while True:
-            results = youtube.commentThreads().list(
-                part='snippet',
-                videoId=video_id,
-                pageToken=nextPageToken
-            ).execute()
+        elif platform == "YouTube":
+            DEVELOPER_KEY = 'your_developer_key'
+            YOUTUBE_API_SERVICE_NAME = 'youtube'
+            YOUTUBE_API_VERSION = 'v3'
+            video_id = id
+            youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)
+            comments = []
+            nextPageToken = ''
+            while True:
+                results = youtube.commentThreads().list(
+                    part='snippet',
+                    videoId=video_id,
+                    pageToken=nextPageToken
+                ).execute()
 
-            nextPageToken = results.get('nextPageToken')
+                nextPageToken = results.get('nextPageToken')
 
-            for item in results['items']:
-                comment = item['snippet']['topLevelComment']['snippet']['textDisplay']
-                comments.append(comment)
+                for item in results['items']:
+                    comment = item['snippet']['topLevelComment']['snippet']['textDisplay']
+                    comments.append(comment)
 
-            if not nextPageToken:
-                break
+                if not nextPageToken:
+                    break
 
-        request1 = youtube.videos().list(
-            part="snippet,contentDetails,statistics",
-            id=video_id
-        )
-        response = request1.execute()
-        description = response['items'][0]['snippet']['description']
-        cleaned_string = description.replace("\n", "")
-        obj = {"Comments": comments, "Description": description}
-        no = len(comments)
+            request1 = youtube.videos().list(
+                part="snippet,contentDetails,statistics",
+                id=video_id
+            )
+            response = request1.execute()
+            description = response['items'][0]['snippet']['description']
+            cleaned_string = description.replace("\n", "")
+            no = len(comments)
 
-        return jsonify({"Comments": comments, "Description": cleaned_string, "Com_count": no})
+            return jsonify({"Comments": comments, "Description": cleaned_string, "Com_count": no})
+
+        else:
+            return jsonify({"error": f"Unsupported platform: {platform}"})
+
+    except KeyError as e:
+        return jsonify({"error": f"Missing key in request data: {str(e)}"})
+
+    except Exception as e:
+        return jsonify({"error": str(e)})
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8000)
+    app.run(debug=True, host='0.0.0.0')
