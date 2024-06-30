@@ -66,10 +66,11 @@ def data_social():
         id = json_data['id']
 
         if platform == "Twitter":
-            consumer_key = "your_consumer_key"
-            consumer_secret = "your_consumer_secret"
-            access_token = "your_access_token"
-            access_token_secret = "your_access_token_secret"
+            consumer_key = "KAi8jFN93D96CAUwpwtJsDl5W"
+            consumer_secret = "FH45qTtGgj8bvL9a4JlHZtKvZNh0FXqSd4yT7WjqjelQbKcDzG"
+            access_token = "1484587292677181441-WtLbTzL5lCyklZlcVRK27kPFXYeCyZ"
+            access_token_secret = "iI3almvnTMqvi8LyoVIZHqKEk6MTeXBq1kVWufUmehArx"
+
 
             auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
             auth.set_access_token(access_token, access_token_secret)
@@ -80,7 +81,7 @@ def data_social():
             return jsonify({"text": full_text})
 
         elif platform == "YouTube":
-            DEVELOPER_KEY = 'your_developer_key'
+            DEVELOPER_KEY = 'AIzaSyAxo0H1RshuKNpnA8Hpex0DPkII9O6z9sY'
             YOUTUBE_API_SERVICE_NAME = 'youtube'
             YOUTUBE_API_VERSION = 'v3'
             video_id = id
