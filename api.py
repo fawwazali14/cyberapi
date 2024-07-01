@@ -12,8 +12,7 @@ from googleapiclient.discovery import build
 import pickle
 
 app = Flask(__name__)
-CORS(app)
-
+CORS(app, resources={r"/*": {"origins": "https://cyber-censor.vercel.app"}})
 
 
 
