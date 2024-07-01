@@ -12,9 +12,7 @@ from googleapiclient.discovery import build
 import pickle
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://cyberapi-nrnd.onrender.com"}})
-
-
+CORS(app, resources={r"/api/*": {"origins": "https://cyber-censor.vercel.app"}})
 
 @app.route('/ml', methods=['POST'])
 def ml():
@@ -69,7 +67,6 @@ def data_social():
             consumer_secret = "FH45qTtGgj8bvL9a4JlHZtKvZNh0FXqSd4yT7WjqjelQbKcDzG"
             access_token = "1484587292677181441-WtLbTzL5lCyklZlcVRK27kPFXYeCyZ"
             access_token_secret = "iI3almvnTMqvi8LyoVIZHqKEk6MTeXBq1kVWufUmehArx"
-
 
             auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
             auth.set_access_token(access_token, access_token_secret)
