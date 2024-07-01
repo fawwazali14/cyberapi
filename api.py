@@ -12,7 +12,7 @@ from googleapiclient.discovery import build
 import pickle
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "https://cyber-censor.vercel.app"}})
+CORS(app)
 
 @app.route('/ml', methods=['POST'])
 def ml():
