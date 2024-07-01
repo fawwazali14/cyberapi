@@ -56,6 +56,7 @@ def ml():
 
 @app.route('/dataa', methods=['POST'])
 def data_social():
+    print("lets go")
     try:
         data = request.data.decode()
         json_data = json.loads(data)
